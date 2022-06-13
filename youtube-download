@@ -29,7 +29,7 @@ def main() -> None:
         }
     else:
         ydl_opts = {
-            "outtmpl": "%(title)s.%(ext)s",
+            "outtmpl": "%(upload_date>%Y-%m-%d)s - %(title)s.%(ext)s",
             # "restrictfilenames": True, # replace space with _
             "ignoreerrors": True,
             "format": "mp4",
@@ -37,7 +37,6 @@ def main() -> None:
         }
         
     ydl = yt_dlp.YoutubeDL(ydl_opts)
-    
     if not sys.stdin.isatty():
         for line in sys.stdin:
             if line == "\n": continue
