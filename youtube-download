@@ -16,24 +16,47 @@ def main() -> None:
     
     if args.audio:        
         ydl_opts = {
+            'writethumbnail': True,
             "outtmpl": "%(title)s.%(ext)s",
             # "restrictfilenames": True, # replace space with _
             "ignoreerrors": True,
             "format": "bestaudio/best",
             "continuedl": True,
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '192',
-            }]
+            'postprocessors': [
+                {
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                    'preferredquality': '192',
+                },
+                
+                {
+                    'key': 'FFmpegMetadata', 
+                    'add_metadata': 'True'
+                },
+                
+                {
+                    'key': 'EmbedThumbnail'
+                }
+            ]
         }
     else:
         ydl_opts = {
+            'writethumbnail': True,
             "outtmpl": "%(upload_date>%Y-%m-%d)s - %(title)s.%(ext)s",
             # "restrictfilenames": True, # replace space with _
             "ignoreerrors": True,
             "format": "mp4",
-            "continuedl": True
+            "continuedl": True,
+            'postprocessors': [
+                {
+                    'key': 'FFmpegMetadata', 
+                    'add_metadata': 'True'
+                },
+                
+                {
+                    'key': 'EmbedThumbnail'
+                }
+            ]
         }
         
     ydl = yt_dlp.YoutubeDL(ydl_opts)
