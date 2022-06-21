@@ -1,8 +1,8 @@
-EXE_NAME="youtube-download"
-INSTALL_DIR=/usr/bin
+EXE_NAME=youtube-download
+INSTALL_DIR=~/.local/bin
 
 install:
-	cp ${EXE_NAME} ${INSTALL_DIR}/
+	@cp -v ${EXE_NAME} ${INSTALL_DIR}/
 
 uninstall:
-	rm -v ${INSTALL_DIR}/${EXE_NAME} 
+	@rm -v ${INSTALL_DIR}/${EXE_NAME} 
