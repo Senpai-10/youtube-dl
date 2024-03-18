@@ -1,8 +1,10 @@
-EXE_NAME=youtube-download
-INSTALL_DIR=~/.local/bin
-
 install:
-	@cp -v ${EXE_NAME} ${INSTALL_DIR}/
+	pipx install .
 
 uninstall:
-	@rm -v ${INSTALL_DIR}/${EXE_NAME} 
+	pipx uninstall .
+
+setup:
+	python -m venv .venv
+	source .venv/bin/activate
+	pip install -e .

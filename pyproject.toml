@@ -1,0 +1,9 @@
+[project]
+name = "youtube-dl"
+version = "0.1.0"
+description = "`yt-dlp` helper for easy download of youtube videos."
+readme = "README.md"
+dependencies = ["yt-dlp", "click"]
+
+[project.scripts]
+youtube-dl = "main:main_cli"
