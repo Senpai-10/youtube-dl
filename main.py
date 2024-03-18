@@ -4,7 +4,14 @@ import yt_dlp
 
 @click.command()
 @click.argument("urls", nargs=-1)
-def video(urls):
+@click.option(
+    "-N",
+    "--concurrent-fragments",
+    default=1,
+    type=int,
+    help="Number of fragments of a dash/hlsnative video that should be downloaded concurrently",
+)
+def video(urls, concurrent_fragments):
     """
     Download youtube videos audio
     """
@@ -15,6 +22,7 @@ def video(urls):
         "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
         "continuedl": True,
         "windowsfilenames": True,
+        "concurrent_fragment_downloads": concurrent_fragments,
         "postprocessors": [
             {"key": "FFmpegMetadata", "add_metadata": "True"},
             {"key": "EmbedThumbnail"},
@@ -28,7 +36,14 @@ def video(urls):
 
 @click.command()
 @click.argument("urls", nargs=-1)
-def audio(urls):
+@click.option(
+    "-N",
+    "--concurrent-fragments",
+    default=1,
+    type=int,
+    help="Number of fragments of a dash/hlsnative video that should be downloaded concurrently",
+)
+def audio(urls, concurrent_fragments):
     """
     Download youtube videos audio
     """
@@ -39,6 +54,7 @@ def audio(urls):
         "format": "bestaudio/best",
         "continuedl": True,
         "windowsfilenames": True,
+        "concurrent_fragment_downloads": concurrent_fragments,
         "postprocessors": [
             {
                 "key": "FFmpegExtractAudio",
@@ -84,7 +100,14 @@ def audio(urls):
     default=False,
     help="Download all videos/shorts as mp3 files",
 )
-def channel(url, videos, shorts, audio):
+@click.option(
+    "-N",
+    "--concurrent-fragments",
+    default=1,
+    type=int,
+    help="Number of fragments of a dash/hlsnative video that should be downloaded concurrently",
+)
+def channel(url, videos, shorts, audio, concurrent_fragments):
     """
     Download all youtube videos from channel
     save video id to ids.json and check if video is already downloaded
@@ -96,8 +119,7 @@ def channel(url, videos, shorts, audio):
         "format": "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best",
         "continuedl": True,
         "windowsfilenames": True,
-        # "addmetadata": True,
-        # "ignoreerrors": True,
+        "concurrent_fragment_downloads": concurrent_fragments,
         "download_archive": "archive.log",
         "postprocessors": [
             {"key": "FFmpegMetadata", "add_metadata": "True"},
