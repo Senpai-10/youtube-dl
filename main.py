@@ -1,6 +1,7 @@
 import click
 import yt_dlp
 import subprocess
+from typing import List
 
 
 @click.command()
@@ -19,7 +20,7 @@ import subprocess
     default=False,
     help="Calculate total size of media playlist contents (Install totalsize).",
 )
-def video(urls, concurrent_fragments, totalsize):
+def video(urls: List[str], concurrent_fragments: int, totalsize: bool):
     """
     Download youtube videos audio
     """
@@ -38,7 +39,12 @@ def video(urls, concurrent_fragments, totalsize):
     }
 
     if totalsize:
-        subprocess.check_output(["totalsize", urls])
+        args = ["totalsize"]
+
+        for url in urls:
+            args.append(url)
+
+        subprocess.check_output(args)
         exit(0)
 
     yt = yt_dlp.YoutubeDL(opts)
@@ -62,7 +68,7 @@ def video(urls, concurrent_fragments, totalsize):
     default=False,
     help="Calculate total size of media playlist contents (Install totalsize).",
 )
-def audio(urls, concurrent_fragments, totalsize):
+def audio(urls: List[str], concurrent_fragments: int, totalsize: bool):
     """
     Download youtube videos audio
     """
@@ -86,7 +92,12 @@ def audio(urls, concurrent_fragments, totalsize):
     }
 
     if totalsize:
-        subprocess.check_output(["totalsize", urls])
+        args = ["totalsize"]
+
+        for url in urls:
+            args.append(url)
+
+        subprocess.check_output(args)
         exit(0)
 
     yt = yt_dlp.YoutubeDL(opts)
@@ -137,7 +148,7 @@ def audio(urls, concurrent_fragments, totalsize):
     default=False,
     help="Calculate total size of media playlist contents (Install totalsize).",
 )
-def channel(url, videos, shorts, audio, concurrent_fragments, totalsize):
+def channel(url: str, videos: bool, shorts: bool, audio: bool, concurrent_fragments: int, totalsize: bool):
     """
     Download all youtube videos from channel
     save video id to ids.json and check if video is already downloaded
