@@ -1,5 +1,6 @@
 import click
 import yt_dlp
+import subprocess
 
 
 @click.command()
@@ -11,7 +12,14 @@ import yt_dlp
     type=int,
     help="Number of fragments of a dash/hlsnative video that should be downloaded concurrently",
 )
-def video(urls, concurrent_fragments):
+@click.option(
+    "--totalsize",
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help="Calculate total size of media playlist contents (Install totalsize).",
+)
+def video(urls, concurrent_fragments, totalsize):
     """
     Download youtube videos audio
     """
@@ -29,6 +37,10 @@ def video(urls, concurrent_fragments):
         ],
     }
 
+    if totalsize:
+        subprocess.check_output(["totalsize", urls])
+        exit(0)
+
     yt = yt_dlp.YoutubeDL(opts)
 
     yt.download(urls)
@@ -43,7 +55,14 @@ def video(urls, concurrent_fragments):
     type=int,
     help="Number of fragments of a dash/hlsnative video that should be downloaded concurrently",
 )
-def audio(urls, concurrent_fragments):
+@click.option(
+    "--totalsize",
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help="Calculate total size of media playlist contents (Install totalsize).",
+)
+def audio(urls, concurrent_fragments, totalsize):
     """
     Download youtube videos audio
     """
@@ -65,6 +84,10 @@ def audio(urls, concurrent_fragments):
             {"key": "EmbedThumbnail"},
         ],
     }
+
+    if totalsize:
+        subprocess.check_output(["totalsize", urls])
+        exit(0)
 
     yt = yt_dlp.YoutubeDL(opts)
 
@@ -107,7 +130,14 @@ def audio(urls, concurrent_fragments):
     type=int,
     help="Number of fragments of a dash/hlsnative video that should be downloaded concurrently",
 )
-def channel(url, videos, shorts, audio, concurrent_fragments):
+@click.option(
+    "--totalsize",
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help="Calculate total size of media playlist contents (Install totalsize).",
+)
+def channel(url, videos, shorts, audio, concurrent_fragments, totalsize):
     """
     Download all youtube videos from channel
     save video id to ids.json and check if video is already downloaded
@@ -126,6 +156,10 @@ def channel(url, videos, shorts, audio, concurrent_fragments):
             {"key": "EmbedThumbnail"},
         ],
     }
+
+    if totalsize:
+        subprocess.check_output(["totalsize", url])
+        exit(0)
 
     if audio:
         opts["outtmpl"] = "%(title)s.%(ext)s"
