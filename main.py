@@ -39,12 +39,9 @@ def video(urls: List[str], concurrent_fragments: int, totalsize: bool):
     }
 
     if totalsize:
-        args = ["totalsize"]
-
         for url in urls:
-            args.append(url)
-
-        subprocess.check_output(args)
+            output: str = subprocess.getoutput(f'totalsize "{url}"')
+            print(output)
         exit(0)
 
     yt = yt_dlp.YoutubeDL(opts)
@@ -92,12 +89,9 @@ def audio(urls: List[str], concurrent_fragments: int, totalsize: bool):
     }
 
     if totalsize:
-        args = ["totalsize"]
-
         for url in urls:
-            args.append(url)
-
-        subprocess.check_output(args)
+            output: str = subprocess.getoutput(f'totalsize "{url}"')
+            print(output)
         exit(0)
 
     yt = yt_dlp.YoutubeDL(opts)
@@ -148,7 +142,14 @@ def audio(urls: List[str], concurrent_fragments: int, totalsize: bool):
     default=False,
     help="Calculate total size of media playlist contents (Install totalsize).",
 )
-def channel(url: str, videos: bool, shorts: bool, audio: bool, concurrent_fragments: int, totalsize: bool):
+def channel(
+    url: str,
+    videos: bool,
+    shorts: bool,
+    audio: bool,
+    concurrent_fragments: int,
+    totalsize: bool,
+):
     """
     Download all youtube videos from channel
     save video id to ids.json and check if video is already downloaded
@@ -169,7 +170,8 @@ def channel(url: str, videos: bool, shorts: bool, audio: bool, concurrent_fragme
     }
 
     if totalsize:
-        subprocess.check_output(["totalsize", url])
+        output: str = subprocess.getoutput(f'totalsize "{url}"')
+        print(output)
         exit(0)
 
     if audio:
