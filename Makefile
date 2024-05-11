@@ -1,5 +1,5 @@
 install:
-	pipx install -e .
+	pipx install -e --force .
 
 uninstall:
 	pipx uninstall .
